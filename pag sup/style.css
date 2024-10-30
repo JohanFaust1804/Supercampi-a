@@ -11,13 +11,13 @@ body {
     margin: 0 auto;
     max-width: 1200px;
     font-family:'Lato', sans-serif;
-    color: blanchedalmond;
+    color: #339;
 }
 
 .icon-cart {
     width: 80;
     height: 80px;
-    stroke: orange;
+    stroke: orangered;
 }
 
 .icon-cart:hover {
@@ -58,7 +58,7 @@ header {
 }
 
 #contador-productos {
-    font-size: 12px;
+    font-size: 18px;
     color: white;
 }
 
@@ -67,10 +67,10 @@ header {
     top: 50px;
     right: 0;
 
-    background-color: #fff;
+    background-color: whitesmoke;
     width: 400px;
     z-index: 1;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.20);
+    box-shadow: 0 20px 30px rgb(1, 59, 250);
     border-radius: 10px;
 }
 
@@ -162,6 +162,7 @@ header {
 .item {
     flex: 1 1 calc(33% - 10px); /* 3 items por fila, ajusta según sea necesario */
     margin: 5px;
+    background-color: azure;
 }
 
 @media (max-width: 768px) {
