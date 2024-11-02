@@ -9,6 +9,8 @@ const vaciarCarritoBtn = document.getElementById('vaciar-carrito');
 
 let cart = [];
 
+
+
 // Mostrar y ocultar el carrito
 btnCart.addEventListener('click', () => {
     containerCartProducts.classList.toggle('hidden-cart');
