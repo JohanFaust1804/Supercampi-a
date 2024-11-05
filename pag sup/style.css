@@ -7,6 +7,14 @@
     box-sizing: border-box;
 }
 
+/* Definir variables de color */
+:root {
+    --color-primary: #ff4e00; /* Naranja principal */
+    --color-primary-dark: #e53e00; /* Naranja oscuro para hover */
+    --color-danger: #f44336; /* Rojo para el botón de vaciar */
+    --color-danger-dark: #d32f2f; /* Rojo oscuro para hover */
+}
+
 body {
     background-color: #ffffff; /* Fondo blanco */
     align-items: center;
@@ -27,7 +35,7 @@ body {
 .icon-cart {
     width: 80px; /* Ajusta el ancho del icono */
     height: 80px; /* Ajusta la altura del icono */
-    stroke: #ff4e00; /* Color del icono en naranja */
+    stroke: var(--color-primary); /* Color del icono en naranja */
 }
 
 .count-products {
@@ -35,7 +43,7 @@ body {
     top: 10%; /* Ajusta según sea necesario */
     left: -0%; /* Coloca el contador a la derecha del icono */
     
-    background-color: #ff4e00; /* Fondo naranja */
+    background-color: var(--color-primary); /* Fondo naranja */
     color: #ffffff; /* Texto blanco */
     width: 25px;
     height: 25px;
@@ -147,7 +155,7 @@ img {
 
 .info-product button {
     border: none;
-    background-color: #ff4e00; /* Fondo naranja para los botones */
+    background-color: var(--color-primary); /* Fondo naranja para los botones */
     color: #ffffff; /* Texto blanco */
     padding: 15px 10px;
     cursor: pointer;
@@ -156,7 +164,7 @@ img {
 }
 
 .info-product button:hover {
-    background-color: #e53e00; /* Naranja más oscuro al pasar el mouse */
+    background-color: var(--color-primary-dark); /* Naranja más oscuro al pasar el mouse */
 }
 
 /* Barra de búsqueda */
@@ -179,6 +187,8 @@ img {
 
 .container-cart-products {
     transition: transform 0.3s ease;
+    padding: 20px;
+    max-width: 300px;
     /* Otras propiedades */
 }
 
@@ -186,8 +196,8 @@ img {
     background-color: #fff;
     border-radius: 10px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    margin-bottom: 10px;
-    padding: 10px;
+    margin-bottom: 15px;
+    padding: 15px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -197,8 +207,12 @@ img {
     transform: scale(1.02); /* Efecto de hover */
 }
 
+.container-cart-products.show {
+    transform: translateX(-100%); /* Desliza el carrito hacia la vista */
+}
+
 #vaciar-carrito {
-    background-color: #f44336; /* Rojo para llamar la atención */
+    background-color: var(--color-danger); /* Rojo para llamar la atención */
     color: white; /* Texto blanco */
     border: none; /* Sin borde */
     padding: 10px 15px; /* Espaciado interno */
@@ -209,12 +223,14 @@ img {
 }
 
 #vaciar-carrito:hover {
-    background-color: #d32f2f; /* Color más oscuro al pasar el mouse */
+    background-color: var(--color-danger-dark); /* Color más oscuro al pasar el mouse */
 }
 
 #vaciar-carrito:disabled {
     background-color: #ccc; /* Color gris si está deshabilitado */
-    cursor: not-allowed; /* Cursor que indica que no se puede hacer clic */
+    cursor: not-allowed;
+    opacity: 0.5; /* Opacidad reducida cuando está deshabilitado */
+    transition: opacity 0.3s ease; /* Transición suave de opacidad */
 }
 
 
@@ -281,7 +297,8 @@ img {
 
 .cart-total {
     display: flex;
-    justify-content: center;
+    margin-top: 20px;
+    justify-content: space-between;
     align-items: center;
     padding: 20px 0;
     gap: 20px;
@@ -289,13 +306,15 @@ img {
 }
 
 .cart-total h3 {
+    margin-right: 10px;
     font-size: 20px;
     font-weight: 700;
 }
 
 .total-pagar {
-    font-size: 20px;
-    font-weight: 900;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--color-primary);
 }
 
 .notification {

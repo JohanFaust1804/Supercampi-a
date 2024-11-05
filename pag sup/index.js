@@ -6,8 +6,16 @@ const contadorProductos = document.getElementById('contador-productos');
 const items = document.querySelectorAll('.item');
 const searchInput = document.getElementById('search-input');
 const vaciarCarritoBtn = document.getElementById('vaciar-carrito');
+const iconCart = document.querySelector('.icon-cart');
+const cartContainer = document.querySelector('.container-cart-products');
 
 let cart = [];
+
+
+
+iconCart.addEventListener('click', () => {
+    cartContainer.classList.toggle('show');
+});
 
 
 
