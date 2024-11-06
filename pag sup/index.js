@@ -3,58 +3,59 @@ const containerCartProducts = document.querySelector('.container-cart-products')
 const cartProductsContainer = document.getElementById('cart-products');
 const totalPagar = document.querySelector('.total-pagar');
 const contadorProductos = document.getElementById('contador-productos');
-const items = document.querySelectorAll('.item');
-const searchInput = document.getElementById('search-input');
 const vaciarCarritoBtn = document.getElementById('vaciar-carrito');
-const iconCart = document.querySelector('.icon-cart');
-const cartContainer = document.querySelector('.container-cart-products');
 
+// Array para almacenar los productos del carrito
 let cart = [];
 
-
-
-iconCart.addEventListener('click', () => {
-    cartContainer.classList.toggle('show');
-});
-
-
-
-// Mostrar y ocultar el carrito
+// Mostrar y ocultar el carrito al hacer clic en el icono del carrito
 btnCart.addEventListener('click', () => {
     containerCartProducts.classList.toggle('hidden-cart');
 });
 
-// Función para agregar productos al carrito
-items.forEach(item => {
+// Obtener todos los productos (artículos) de la página
+const productElements = document.querySelectorAll('.item');
+productElements.forEach(item => {
     const button = item.querySelector('button');
     button.addEventListener('click', () => {
+        // Obtener nombre y precio del producto
         const title = item.querySelector('h2').innerText;
         const price = parseFloat(item.querySelector('.price').innerText.replace('$', ''));
 
+        // Comprobar si el producto ya está en el carrito
         const existingProduct = cart.find(product => product.title === title);
-        
+
         if (existingProduct) {
+            // Si el producto ya está en el carrito, incrementar la cantidad
             existingProduct.quantity++;
         } else {
+            // Si el producto no está en el carrito, agregarlo con cantidad 1
             cart.push({ title, price, quantity: 1 });
         }
 
+        // Actualizar la vista del carrito
         updateCart();
+        
+        // Mostrar notificación
         showNotification(`Añadido: ${title}`);
     });
 });
 
-// Función para actualizar el carrito
+// Función para actualizar el carrito en la UI
 function updateCart() {
+    // Limpiar el carrito actual antes de volver a agregar los productos
     cartProductsContainer.innerHTML = '';
+    
     let total = 0;
     let totalCount = 0;
 
+    // Recorrer los productos en el carrito
     cart.forEach(product => {
         const { title, price, quantity } = product;
-        total += price * quantity;
-        totalCount += quantity;
+        total += price * quantity; // Calcular el total
+        totalCount += quantity;    // Calcular el total de productos
 
+        // Crear un div para mostrar cada producto en el carrito
         const productDiv = document.createElement('div');
         productDiv.classList.add('cart-product');
         productDiv.innerHTML = `
@@ -62,76 +63,43 @@ function updateCart() {
                 <span class="cantidad-producto-carrito">${quantity}</span>
                 <p class="titulo-producto-carrito">${title}</p>
                 <span class="precio-producto-carrito">$${(price * quantity).toFixed(2)}</span>
-                <button class="btn-reduce" onclick="reduceQuantity('${title}')">-</button>
                 <button class="btn-remove" onclick="removeProduct('${title}')">Eliminar</button>
             </div>
         `;
-        cartProductsContainer.appendChild(productDiv);
+        cartProductsContainer.appendChild(productDiv); // Agregar producto al contenedor del carrito
     });
 
+    // Mostrar el total y la cantidad total de productos
     totalPagar.innerText = `$${total.toFixed(2)}`;
     contadorProductos.innerText = totalCount;
 }
 
-// Función para reducir la cantidad de un producto
-// Función para reducir la cantidad de un producto
-function reduceQuantity(title) {
-    const product = cart.find(product => product.title === title);
-    if (product) {
-        if (product.quantity > 1) {
-            product.quantity--;
-            showNotification(`Cantidad reducida: ${title}`); // Notificación al reducir
-        } else {
-            const confirmation = confirm(`¿Estás seguro de que quieres eliminar "${title}" del carrito?`);
-            if (confirmation) {
-                cart = cart.filter(product => product.title !== title);
-                showNotification(`Eliminado: ${title}`); // Notificación al eliminar
-            }
-        }
-        updateCart();
-    }
-}
-
-
-// Función para eliminar productos del carrito
+// Función para eliminar un producto del carrito
 function removeProduct(title) {
-    const confirmation = confirm(`¿Estás seguro de que quieres eliminar "${title}" del carrito?`);
-    if (confirmation) {
-        cart = cart.filter(product => product.title !== title);
-        updateCart();
-        showNotification(`Eliminado: ${title}`); // Notificación al eliminar
-    }
+    // Filtrar el carrito para eliminar el producto seleccionado
+    cart = cart.filter(product => product.title !== title);
+    
+    // Actualizar la vista del carrito
+    updateCart();
 }
 
 // Función para vaciar el carrito
 vaciarCarritoBtn.addEventListener('click', () => {
+    // Limpiar el carrito
     cart = [];
+    
+    // Actualizar la vista del carrito
     updateCart();
-    showNotification('Carrito vaciado');
 });
 
-// Filtrar productos por categoría
-searchInput.addEventListener('input', () => {
-    const searchTerm = searchInput.value.toLowerCase();
-
-    items.forEach(item => {
-        const category = item.getAttribute('data-category').toLowerCase();
-        if (category.includes(searchTerm)) {
-            item.style.display = 'block'; // Mostrar producto
-        } else {
-            item.style.display = 'none'; // Ocultar producto
-        }
-    });
-});
-
-// Función para mostrar notificación
+// Función para mostrar la notificación
 function showNotification(message) {
     const notification = document.getElementById('notification');
-    notification.innerText = message;
-    notification.classList.add('show');
+    notification.innerText = message; // Establecer el mensaje de la notificación
+    notification.classList.add('show'); // Mostrar la notificación
 
     // Ocultar el mensaje después de 2 segundos
     setTimeout(() => {
-        notification.classList.remove('show');
+        notification.classList.remove('show'); // Ocultar la notificación
     }, 2000);
 }
